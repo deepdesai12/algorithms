@@ -1,0 +1,46 @@
+Summarize your lab:
+
+  Part 1:
+     Works  Yes 
+The first part validates single character XML tags.
+     
+  Part 2:
+     Works  Yes 
+The seocnd part does what the first part does but also count some many times a single character is used in the XML tag.
+     
+  Part 3:
+     Works  Yes 
+The third part does differ fromt the frist two parts since it uses string and arbitrary XML tags.
+     
+***ANSWERS TO QUESTIONS***
+ Question 1:
+     Which hash table collision resolution method did you use
+     (eg. chaining or open addressing)? Explain your choice
+     briefly (less than 25 words).
+ YOUR ANSWER: In this lab I used the linear probing collision resolution method. I just found it easier and stright forward to count the strings. 
+ 
+ 
+ 
+ 
+ 
+ Question 2:
+       Which hash function (division or multiplication) did you use?
+       How did you convert a string into a number?
+ YOUR ANSWER: The programs used a division function.It first convert the string into number then it adds the interger value of each character in the string.  
+
+ 
+ 
+ 
+ Question 3:
+       Another legal XML tag not used in this lab is the
+       stand-alone tag.  This kind of tag
+       combines both a start-tag and end-tag in one.
+       It is identified with a '/' (slash) preceding the
+       final >.  (For example, the <foo/>
+       is a stand-alone tag that is self balancing.
+       
+       Describe briefly how
+       you would modify Part 3 to allow this kind of tag.
+       
+ YOUR ANSWER:  This was a pretty hard modification.Once it pushes the XML tag, it will then check for  '/' before '>'.If the '/' is there the program will pop the dtring from the stack.
+  

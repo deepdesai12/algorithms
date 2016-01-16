@@ -1,0 +1,196 @@
+#include <stdlib.h> 
+#include <stdio.h>  
+#define MAX_STATES 8
+
+typedef struct SM { 
+	char name;
+	struct SM *onZero;
+	struct SM *onOne;
+	int del; 
+} state;
+
+	state finiteMachine[MAX_STATES];
+	state *currentState;
+	char grabageStates[MAX_STATES];
+	char deleteStates [] = {"00000000"};
+
+	void init_StateMachine();
+	char next_char (char input[], int place);
+	void changeStateMachine (state *currentState, char input[]);
+
+
+	void changeStateMachine(state *currentState, char input[]){
+		int i=currentState[0].name;
+		int save=0;
+		int s;
+	
+		switch (input[1]){
+			case '0':
+				save=input[4];
+				save=save-i;
+				if(currentState[save].del==0){
+				currentState->onZero=&currentState[save];
+				}
+				else
+				printf("\n\t**State cant be accessed and the task cannot be completed.**\n");
+				break;
+				case '1':
+				save=input[4];
+				save=save-i;
+				if(currentState[save].del==0){
+				currentState->onOne=&currentState[save];
+				}
+				else
+				printf("\n\t**State cant be accessed and the task cannot be completed.**\n");
+			break;
+			}
+	}
+	char next_char (char input[], int place)
+	{
+		int countspace=0;
+		int i=0;
+		while (i< 8) 
+		{
+			if( countspace == place)
+			{
+				return input[i];
+				i++;
+			}
+
+			while (i< 8  && input[i] == ' ')
+			{
+				i++;
+				countspace++;
+			}
+		}
+	return 0;
+	}
+
+void print_states(state array[] )
+{
+	int s;
+	
+	state *a0, *n1;
+	for (s=0; s<MAX_STATES;s++)
+	{	
+		if(array[s].del==0)
+		{  
+			printf("%c ",array[s].name); 
+				a0=&array[s]; 
+				n1=&array[s]; 
+                    		a0=a0->onZero; 
+                    		n1=n1->onOne; 
+                    		printf("%c ", a0->name); 
+                    		printf("%c ", n1->name); 
+                    		printf("\n"); 
+				
+				}
+			}
+	}
+
+void init_StateMachine()
+{	
+	int i;
+	for (i=0; i<= MAX_STATES; i++)
+        {
+        	finiteMachine[i].name = i+65;
+}
+void changeStateMachine(state *currentState, char input[])
+{
+	char input1;
+	char input2;
+    
+        input1 = next_char (input, 1); 
+        input2 = next_char (input,2); 
+        
+	    switch (input1)
+	    {
+	        case '0':
+	            if (input2 >= 'A' &&  input2 <= 'A' && deleteStates[input2-65]!=  input2)
+	            {
+	                currentState -> onZero = finiteMachine + (input2 - 65); 
+	            }
+	            else
+	                printf ("state, %c not a legal state. No change made \n", input2);
+			
+			break;
+
+	        case '1' :
+	            if (input2 >= 'A' &&  input2 <= 'A' && deleteStates[input2-65]!=  input2)
+	            {
+	                currentState -> onOne = finiteMachine + (input2 - 65);    
+	            }
+	            else 
+                  
+	                 printf ("state, %c not a legal state. No change made \n", input2);
+	            break;
+		    }
+	
+	}
+
+  	   finiteMachine[0].onZero = finiteMachine +  7;
+  	   finiteMachine[0].onOne  = finiteMachine +  0;
+  	   finiteMachine[1].onZero = finiteMachine +  6;
+  	   finiteMachine[1].onOne  = finiteMachine +  1;
+  	   finiteMachine[2].onZero = finiteMachine +  5;
+  	   finiteMachine[2].onOne  = finiteMachine +  2;
+  	   finiteMachine[3].onZero = finiteMachine +  4;
+  	   finiteMachine[3].onOne  = finiteMachine +  3;
+  	   finiteMachine[4].onZero = finiteMachine +  3;
+  	   finiteMachine[4].onOne  = finiteMachine +  0;
+  	   finiteMachine[5].onZero = finiteMachine +  2;
+  	   finiteMachine[5].onOne  = finiteMachine +  5;
+  	   finiteMachine[6].onZero = finiteMachine +  1;
+  	   finiteMachine[6].onOne  = finiteMachine +  6;
+  	   finiteMachine[7].onZero = finiteMachine +  0;
+  	   finiteMachine[7].onOne  = finiteMachine +  7;
+
+	}
+
+	int main(int argc, char*argv[])
+
+	{   
+	    state *current;
+		init_StateMachine(); 
+		char change[5], input;
+		current = finiteMachine + 4;
+		int start;
+	    	printf("\n Your Starting State: %c\n\n", current ->name);
+    
+   	while( start ==0)
+	{
+		input= getchar();
+		switch (input)
+		{
+				case '0':
+					current = current ->onZero;
+					printf("\n %c \n", current -> name);
+					break;
+
+				case '1':
+					current = current -> onOne;
+					printf("\n %c \n", current -> name);
+					break;
+
+				case 'C':
+					change [0]=getchar(); 
+		                        change [1]=getchar(); 
+                    			change [2]=getchar(); 
+                    			change [3]=getchar(); 
+                    			change [4]=getchar();
+					changeStateMachine (current, change);
+					break;
+
+				case 'P':
+					print_states(finiteMachine);
+					break;
+
+				case 'E':
+					printf("Are you sure you want to exit: 0=No, 1=Yes\n");
+					scanf("%d",&start);
+					break;
+		}
+		
+	}
+	return(0); 
+}

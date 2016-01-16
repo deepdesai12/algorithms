@@ -1,0 +1,42 @@
+#include "mySort.h"
+
+void mySort(int array[], unsigned int first, unsigned int last)
+
+{
+int middle , a;
+int x,y;
+int leftArray[MAX_SIZE_N_TO_SORT] , rightArray[MAX_SIZE_N_TO_SORT];
+
+ if ( first < last)
+{
+    middle = ( first + last - 1 ) / 2 ;
+
+mySort ( array , first ,middle ) ; 
+mySort ( array , middle + 1 , last);
+
+for ( x = 0 ; x < (middle - first + 1 ); x++) 
+	{ 
+		leftArray[x] = array[x +first];
+	}
+for ( y = 0 ; y < (last - middle) ; y++)
+	{
+		rightArray[y] = array [ middle + y + 1 ] ;
+	}
+//Assume Max integer is 10000000
+ leftArray[ middle - first +1 ] = 10000000;
+rightArray[ last - middle ] = 100000000;
+
+x = 0 ;
+y = 0 ;
+ for( a = first ; a <= last ; a++ )
+	{	
+if ( myCompare ( leftArray[x] , rightArray[y]) < 0 ) {
+	myCopy( &leftArray[x], &array[a]);
+	x++;
+        }
+	else {
+ 	myCopy( &rightArray[y] , &array[a]);
+	y++;
+	}
+ }
+ }}
